@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         //restart the current scene
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
         {
-            SceneManager.LoadScene(0); //Current Game Scene
+            SceneManager.LoadScene(1); //Current Game Scene
             //Para asignar la escena 0 primero debemos ir a File -> Build Settings -> Add scene y se generará un indice para la escena en cuestión
         }
     }
