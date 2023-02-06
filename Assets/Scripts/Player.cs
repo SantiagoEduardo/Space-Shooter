@@ -22,11 +22,16 @@ public class Player : MonoBehaviour
   [SerializeField]
   private int _lives = 3;
   private SpawnManager _spawnManager;
+
   private bool _isTripleShotActive = false;
   private bool _isSpeedBoostActive = false;
   private bool _isShieldActive = false;
+
   [SerializeField]
   private GameObject _shieldVisualizer;
+
+  [SerializeField]
+  private GameObject _leftEngine, _rightEngine;
 
   [SerializeField]
   private int _score;
@@ -145,6 +150,21 @@ public void Damage()
     }
 
     _lives --;
+
+    //if lives is 2
+    //enable right engine
+    //else if lives is 1
+    //enable left engine
+
+    if (_lives ==2)
+    {
+        _leftEngine.SetActive(true);
+    }
+    else if (_lives ==1)
+    {
+        _rightEngine.SetActive(true);
+    }
+
     _uiManager.UpdateLives(_lives);
     //check if dead destroy us
     if (_lives <1)
