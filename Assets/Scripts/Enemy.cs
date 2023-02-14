@@ -11,10 +11,14 @@ public class Enemy : MonoBehaviour
     //handle to animator component
     private Animator _anim;
 
+    private AudioSource _audioSource;
+
+    private BoxCollider2D _boxCollider2D;  //ADICIONAL PARA EL AUDIO
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();   
+        _audioSource = GetComponent<AudioSource>();
         //null check player 
         //assign the component to Anim
         if (_player == null)
@@ -28,6 +32,14 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("The Animator is NULL.");
         }
+
+        _boxCollider2D = GetComponent<BoxCollider2D>();
+
+        if (_boxCollider2D == null)
+        {
+            Debug.LogError("Collider2D for Enemy is NULL.");
+        }
+
     }
 
     // Update is called once per frame
@@ -59,7 +71,10 @@ public class Enemy : MonoBehaviour
         //trigger anim
         _anim.SetTrigger("OnEnemyDeath");
         _speed = 0;
-        Destroy(this.gameObject, 2.8f);
+        _audioSource.Play();
+        _boxCollider2D.enabled = false; // ADICIONAL PARA NO REPETIR AUDIOS NI CHOCAR
+        Destroy(this.gameObject, 2.5f);
+
       }
 
       //if other is laser destroy laser and destroy us
@@ -81,7 +96,10 @@ public class Enemy : MonoBehaviour
         //trigger anim
         _anim.SetTrigger("OnEnemyDeath");
         _speed = 0;
-        Destroy(this.gameObject, 2.8f);
+        _audioSource.Play();
+        _boxCollider2D.enabled = false; // ADICIONAL PARA NO REPETIR AUDIOS NI CHOCAR
+        Destroy(this.gameObject, 2.5f);
+        //la destruccion del objeto siempre debe ser lo ultimo que se llame que esté asociado a el
       }
       
       

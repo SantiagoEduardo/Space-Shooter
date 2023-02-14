@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
   private bool _isSpeedBoostActive = false;
   private bool _isShieldActive = false;
 
+
+
   [SerializeField]
   private GameObject _shieldVisualizer;
 
@@ -39,6 +41,12 @@ public class Player : MonoBehaviour
 
   private UIManager _uiManager;
 
+  //variable to store the audio clip
+    [SerializeField]
+  private AudioClip _laserSoundClip;
+  
+
+    private AudioSource _audioSource;
   
   void Start()
     {
@@ -48,6 +56,7 @@ public class Player : MonoBehaviour
     //comunicate with SpawnManager, but first we need to find the GameObject, then Get Component
     _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    _audioSource = GetComponent<AudioSource>();
 
     if (_spawnManager == null)
     {
@@ -58,6 +67,16 @@ public class Player : MonoBehaviour
     {
         Debug.Log("The UI Manager is NULL.");
     }
+
+    if (_audioSource == null)
+    {
+        Debug.LogError("AudioSource on the player is NULL.");
+    }
+    else
+    {
+        _audioSource.clip = _laserSoundClip;
+    }
+
   } 
 
     // Update is called once per frame
@@ -132,6 +151,9 @@ void FireLaser()
     {
         Instantiate(_laserPrefab,transform.position + new Vector3(0,1.05f,0), Quaternion.identity);
     }
+
+    //play the laser audio clip porque es mas rápida la luz que el sonido
+    _audioSource.Play();
 
 
 }
