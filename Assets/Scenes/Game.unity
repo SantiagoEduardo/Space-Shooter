@@ -1621,11 +1621,13 @@ MonoBehaviour:
   _tripleShotPrefab: {fileID: 4922897226098028578, guid: c05f6125564224a4a8f98646725a1024, type: 3}
   _fireRate: 0.15
   _lives: 3
+  _speedCoolDown: 0
   _shieldVisualizer: {fileID: 115274105}
   _leftEngine: {fileID: 1110149744}
   _rightEngine: {fileID: 415819749}
   _score: 0
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _powerUpAudioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
 --- !u!212 &1976967256
 SpriteRenderer:
   m_ObjectHideFlags: 0

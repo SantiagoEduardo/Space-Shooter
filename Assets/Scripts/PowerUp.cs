@@ -14,6 +14,20 @@ public class PowerUp : MonoBehaviour
     [SerializeField]    
     private int powerupID;
 
+   /* 
+   private AudioSource _audioSource;
+
+[*] Aqui no debemos utilizar un clip de audio referenciado a un objeto ya que al destruirlo
+se interrumpe el audio
+
+[*]instanciar un objeto vacio cada que queremos el audio alentará el juego
+
+[*]crear una corutina para esperar a que el audio termine de reproducirse pero inhabilitando el objeto destruido tampoco parece ser una buena solucion, asi que mejor vamos a obtener una referencia al audio que queremos sin depender del objeto:
+
+*/
+
+
+ 
 
     void Update()
     {
@@ -38,6 +52,16 @@ public class PowerUp : MonoBehaviour
         //handle to the component I want
         //assign the handle to the component
         Player player = other.transform.GetComponent<Player>();
+
+        // Para repdoducir nuestro audio sin tener la referencia en el objeto, solo en una variable
+ //PlayClipAtPoint parece que emite el sonido desde un vector que indicamos y si está lejos de la cámara se escucha bajo el sonido, si se pone como ruta la cámara se elimina el efecto stereo, sde donde proviene el origend el sonido, izquierda o derecha
+     //   AudioSource.PlayClipAtPoint(_clip, transform.position);
+
+    //    AudioSource.PlayClipAtPoint(_clip, new Vector3(transform.position.x, transform.position.y, -10.0f));
+ 
+
+
+
         if(player != null)
         {
  

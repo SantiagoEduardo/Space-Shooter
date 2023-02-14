@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
   //optional value assigned
 [SerializeField] //serializar los datos para que podamos lkeerlos en el inspector
   private float _speed = 5f;
-  private float _speedMultiplier = 2;
+  //private float _speedMultiplier = 2;
   [SerializeField]
   private GameObject _laserPrefab; 
   [SerializeField]
@@ -24,9 +24,15 @@ public class Player : MonoBehaviour
   private SpawnManager _spawnManager;
 
   private bool _isTripleShotActive = false;
-  private bool _isSpeedBoostActive = false;
+  //private bool _isSpeedBoostActive = false;
   private bool _isShieldActive = false;
 
+//[]
+private float _boostedSpeed = 10.0f;
+private float _defaultSpeed;
+[SerializeField]
+private int _speedCoolDown = 0;
+//[]
 
 
   [SerializeField]
@@ -47,7 +53,10 @@ public class Player : MonoBehaviour
   
 
     private AudioSource _audioSource;
-  
+
+ [SerializeField]
+    private AudioClip _powerUpAudioClip;
+
   void Start()
     {
     //take the current position = new position (0,0,0)
@@ -198,6 +207,7 @@ public void Damage()
 
 public void TripleShotActive()
 {
+  _audioSource.PlayOneShot(_powerUpAudioClip);
   //TripleShotActive becomes true
   //start the power down coroutine for triple shot
   _isTripleShotActive = true;
@@ -213,8 +223,8 @@ IEnumerator TripleShotPowerDownRoutine()
   _isTripleShotActive = false;
 }
 
-
-    public void SpeedBoostActive()
+/*
+    public void SpeedBoostActive1()
     {
         _isSpeedBoostActive = true;
         _speed *= _speedMultiplier;
@@ -228,8 +238,38 @@ IEnumerator SpeedBoostPowerDownRoutine()
     _speed /= _speedMultiplier;
 }
 
+*/
+
+    public void SpeedBoostActive()
+    {
+        _audioSource.PlayOneShot(_powerUpAudioClip);
+        if (_speedCoolDown == 0)
+        {
+            _defaultSpeed = _speed;
+            _speed = _boostedSpeed;
+            StartCoroutine(SpeedBoostPowerDown());
+        }
+        else
+        {
+            _speedCoolDown += 5;
+        }
+    }
+
+    IEnumerator SpeedBoostPowerDown()
+    {
+        _speedCoolDown += 5;
+        while(_speedCoolDown > 0)
+        {
+            yield return new WaitForSeconds(1.0f);
+            _speedCoolDown--;
+        }
+        _speed = _defaultSpeed;
+    }
+
+
     public void ShieldActive()
     {
+        _audioSource.PlayOneShot(_powerUpAudioClip);
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
     }
